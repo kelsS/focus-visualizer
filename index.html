@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Visualizer Chrome Extention</title>
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <!-- app styles -->
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <main>
+        <div data-js="choose-focus-color-widget" class="container">
+
+            <h1>Choose your preferred focus indicator color</h1>
+            <div data-js="color-picker-container" class="color-picker-container">
+                <label for="color-picker">Color picker</label>
+                <input class="color-picker" id="color-picker" data-jscolor="">
+            </div>
+
+            <div class="preview">
+                <h2>Focus indicator preview</h2>
+
+                <a href="#" data-js="preview-link">The focus style appears as a dotted outline set to the color you choose</a>
+            </div>
+        </div>
+    </main>
+    
+    <!-- app functionality -->
+    <script src="jscolor.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

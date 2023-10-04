@@ -1,0 +1,17 @@
+{
+    "name": "Focus Visualizer",
+    "version": "1.0.0",
+    "description": "A chrome extension that allows the user to set their own custom focus indicator color.",
+    "manifest_version": 3,
+    "author": "Kelsey S.",
+    "action":{
+        "default_popup": "index.html",
+        "default_title": "Focus Visualizer"
+    },
+    "icons": {
+        "16": "icon16.png",
+        "32": "icon32.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    }
+}
