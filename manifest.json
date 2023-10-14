@@ -8,6 +8,14 @@
         "default_popup": "index.html",
         "default_title": "Focus Visualizer"
     },
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ],
+    "host_permissions": [ "<all_urls>" ],
+    "background": {
+        "service_worker": "background.js"
+    },
     "icons": {
         "16": "icon16.png",
         "32": "icon32.png",

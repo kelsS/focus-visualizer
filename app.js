@@ -3,7 +3,9 @@ function setFocusColor() {
     const colorPicker = document.querySelector('[data-jscolor=""]');
 
     colorPicker.addEventListener("click", () => {
+
         watchColorChanges();
+
     });
 
 }
@@ -55,6 +57,17 @@ function watchColorChanges() {
             
                 }
 
+               const objPageOverrides = BackgroundPage.objCurrentPage.blnOverrides;
+               const currentUrl = objCurrentPage.Url;
+
+                if(objPageOverrides['OverridenPages']){
+                    ChangeBtnState(currentUrl, 'remove', objCurrentPage.callRemoveCss);
+                    }
+                    else{
+                    ChangeBtnState(currentUrl, 'add', objCurrentPage.callInjectCss);
+                }
+                    
+
                 //@todo: fix this so that the styles block is only added once per hex change
                 document.getElementsByTagName("head")[0].appendChild(styleTag);
                 
@@ -78,6 +91,23 @@ function watchColorChanges() {
     }
 }
   
-// lift off 🚀
-setFocusColor();
-  
+
+// wait for page to load
+document.addEventListener("DOMContentLoaded", () => {
+    chrome.action.onClicked.addListener(async (tab) => {
+        try {
+          await chrome.scripting.executeScript({
+            target: {
+              tabId: tab.id,
+            },
+            func: () => {
+                document.body.style.border = "5px solid green";
+                // lift off 🚀
+                //setFocusColor();
+            },
+          });
+        } catch (err) {
+          console.error(`failed to execute script: ${err}`);
+        }
+      });
+});
