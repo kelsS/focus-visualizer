@@ -11,11 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
 
     <!-- app styles -->
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="ext.css">
 </head>
 <body>
     <main>
-        <!-- <div data-js="choose-focus-color-widget" class="container">
+        <div data-js="choose-focus-color-widget" class="container">
 
             <h1>Choose your preferred focus indicator color</h1>
             <div data-js="color-picker-container" class="color-picker-container">
@@ -29,21 +29,13 @@
                 <a href="#" data-js="preview-link">The focus style appears as a dotted outline set to the color you choose</a>
 
             </div>
-        </div> -->
-
-        <div class="container">
-            <button id="replace-button">Replace</button>
-        </div>
-
-        <div class="hate">
-            <p>hate hate hate hate hate hate hate hate hate</p>
         </div>
     </main>
     
     <!-- app functionality -->
     <!-- https://jscolor.com/ -->
     <script src="jscolor.min.js"></script>
-    <script src="popup.js"></script>
+    <script type="module" src="popup.js"></script>
 
 </body>
 </html>

@@ -1,78 +1,73 @@
-// function setFocusColorPreview() {
-//     // ui
-//     const colorPicker = document.querySelector('[data-jscolor]');
+const colorPicker = document.querySelector('[data-jscolor]');
 
-//     colorPicker.addEventListener('blur', () => {
+function watchColorChanges() {
+    // ui
+    const previewLink = document.querySelector('[data-js="preview-link"]');
+    // Select the node that will be observed for changes
+    const head = document.querySelector('head');
 
-//         watchColorChanges();
+    let currentColor = colorPicker.getAttribute(["data-current-color"]);
 
-//     });
+    let styles = `
+        button:focus,
+        button:hover,
+        input:focus,
+        input:hover,
+        a:focus,
+        a:hover,
+        [tabindex="0"]:focus,
+        [tabindex="0"]:hover,
+        select:focus,
+        select:hover,
+        textarea:focus,
+        textarea:hover {
+            outline: 5px dotted ${currentColor} !important; 
+            outline-offset: 5px !important;
+        }
+    `;
 
-// }
-  
-// function watchColorChanges() {
-//     // ui
-//     const previewLink = document.querySelector('[data-js="preview-link"]');
-//     // Select the node that will be observed for changes
-//     // target: color picker input
-//     const targetNode = document.querySelector('[data-jscolor]');
-//     const head = document.getElementsByTagName("head")[0];
+    const styleTag = document.createElement("style");
 
-//     let currentColor = targetNode.getAttribute(["data-current-color"]);
+    // add special data attr for FV
+    styleTag.classList.add('focusvis--styles')
 
-//     let styles = `
-//         button:focus,
-//         button:hover,
-//         input:focus,
-//         input:hover,
-//         a:focus,
-//         a:hover,
-//         [tabindex="0"]:focus,
-//         [tabindex="0"]:hover,
-//         select:focus,
-//         select:hover,
-//         textarea:focus,
-//         textarea:hover {
-//             outline: 5px dotted ${currentColor} !important;
-//         }
-//     `;
+    if (styleTag.styleSheet) {
 
-//     const styleTag = document.createElement("style");
-//     // add special data attr for FV
-//     styleTag.setAttribute('data-js', 'focus-visualizer');
+        styleTag.styleSheet.cssText = styles;
 
-//     if (styleTag.styleSheet) {
+    } else {
 
-//         styleTag.styleSheet.cssText = styles;
+        styleTag.appendChild(document.createTextNode(styles));
 
-//     } else {
-
-//         styleTag.appendChild(document.createTextNode(styles));
-
-//     }
+    }
     
     
-//     head.appendChild(styleTag);
+    head.appendChild(styleTag);
     
-//     // update preview link text once color is chosen
-//     previewLink.textContent = `The focus style appears as a dotted outline set to the color ${currentColor}`
+    // update preview link text once color is chosen
+    previewLink.textContent = `The focus style appears as a dotted outline set to the color ${currentColor}`; 
 
-// }
-  
+    return currentColor;
+
+}
 
 // wait for page to load
-// document.addEventListener("DOMContentLoaded", () => {
-//     // lift off 🚀
-//     // setFocusColorPreview();
-// });
+document.addEventListener("DOMContentLoaded", () => {
+    // lift off 🚀
+    colorPicker.addEventListener('blur', () => {
+        let currentColor;
 
-document.addEventListener('DOMContentLoaded', function () {
-    const replaceButton = document.querySelector('#replace-button');
+        currentColor = watchColorChanges();
 
-    console.log(replaceButton);
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, { message: `${currentColor}`});
 
-    replaceButton.addEventListener('click', function () {
-        chrome.runtime.sendMessage(true);
-        console.log('test');
+        });
+
+        console.log(`${currentColor} sent to content script`);
+        
+        return true;
     });
+
+        
 });

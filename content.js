@@ -1,16 +1,43 @@
-const elements = document.querySelectorAll('*');
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
-elements.forEach((element) => {
-  element.childNodes.forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const text = node.textContent;
-      const replacedText = text.replace(/hate/gi, 'love');
- 
-      if (replacedText !== text) {
-        node.textContent = replacedText;
-      }
+    const head = document.querySelector('head');
+
+    let styles = `
+    button:focus,
+    button:hover,
+    input:focus,
+    input:hover,
+    a:focus,
+    a:hover,
+    [tabindex="0"]:focus,
+    [tabindex="0"]:hover,
+    select:focus,
+    select:hover,
+    textarea:focus,
+    textarea:hover {
+        outline: 5px dotted ${request.message} !important; 
+        outline-offset: 5px !important;
     }
-  });
-});
+  `;
 
-console.log('content.js')
+  const styleTag = document.createElement("style");
+
+  // add special data attr for FV
+  styleTag.classList.add('focusvis--styles')
+
+  if (styleTag.styleSheet) {
+
+    styleTag.styleSheet.cssText = styles;
+
+  } else {
+
+    styleTag.appendChild(document.createTextNode(styles));
+
+  }
+
+  head.appendChild(styleTag);
+
+  console.log(`Outline color set to: ${request.message}`);
+  
+  return true;
+});

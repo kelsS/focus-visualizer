@@ -2,10 +2,26 @@
     "name": "Focus Visualizer",
     "author": "kelsS",
     "version": "1.0.0",
-    "description": "A chrome extension that allows the user to set their own custom focus indicator color.",
-    "permissions": ["activeTab", "declarativeContent", "scripting"],
+    "description": "A chrome extension that allows the user to set their own custom focus indicator color per webpage.",
+    "permissions": ["activeTab", "scripting", "tabs"],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "content_scripts": [
+      {
+        "matches": [     
+          "http://*/*",
+          "https://*/*"
+        ],
+        "js": ["content.js"],
+        "css": ["app.css"],
+        "all_frames": true,
+        "run_at": "document_end"
+      }
+    ],
     "background": {
-      "service_worker": "service-worker.js"
+      "service_worker": "service-worker.js",
+      "type": "module"
     },
     "action": {
       "default_popup": "popup.html",
