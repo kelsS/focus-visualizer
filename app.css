@@ -187,3 +187,18 @@ input {
 #color-picker-container > label {
     display: block;
 }
+
+button {
+    margin-top: 25px;
+    margin-bottom: 6px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 16px;
+    background-color: var(--drc-green, #8AFF80);
+    color: var(--drc-black, #22212C);
+    font-size: 16px;
+}
+
+button:hover {
+    cursor: pointer;
+}
